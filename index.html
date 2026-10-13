@@ -1,0 +1,1041 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>门店装修图资料收集表</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+    background: #f0f2f5;
+    color: #1a1a2e;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+  .header {
+    background: linear-gradient(135deg, #1B4332 0%, #2D6A4F 50%, #40916C 100%);
+    color: #fff;
+    padding: 28px 20px 24px;
+    position: relative;
+    overflow: hidden;
+  }
+  .header::after {
+    content: '';
+    position: absolute;
+    bottom: -20px;
+    left: 0;
+    right: 0;
+    height: 40px;
+    background: #f0f2f5;
+    border-radius: 50% 50% 0 0;
+  }
+  .header h1 { font-size: 20px; font-weight: 700; margin-bottom: 8px; }
+  .header p { font-size: 13px; opacity: 0.9; line-height: 1.5; }
+  .header .badge {
+    display: inline-block;
+    background: rgba(255,255,255,0.2);
+    border-radius: 12px;
+    padding: 2px 10px;
+    font-size: 11px;
+    margin-top: 10px;
+  }
+
+  .progress-bar {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: #fff;
+    padding: 10px 20px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .progress-track {
+    flex: 1;
+    height: 6px;
+    background: #e8e8e8;
+    border-radius: 3px;
+    overflow: hidden;
+  }
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #1B4332, #52B788);
+    border-radius: 3px;
+    transition: width 0.4s ease;
+    width: 0%;
+  }
+  .progress-text { font-size: 12px; color: #666; white-space: nowrap; min-width: 52px; text-align: right; }
+
+  .container { padding: 16px; max-width: 520px; margin: 0 auto; }
+
+  .section {
+    background: #fff;
+    border-radius: 14px;
+    padding: 20px 18px;
+    margin-bottom: 14px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+  }
+  .section-title {
+    font-size: 16px;
+    font-weight: 700;
+    color: #1B4332;
+    margin-bottom: 4px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .section-title .icon { font-size: 18px; }
+  .section-desc {
+    font-size: 12px;
+    color: #999;
+    margin-bottom: 16px;
+    padding-bottom: 12px;
+    border-bottom: 1px dashed #eee;
+  }
+
+  .field { margin-bottom: 16px; }
+  .field:last-child { margin-bottom: 0; }
+  .field-label {
+    font-size: 14px;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 6px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+  .field-label .required { color: #e74c3c; font-size: 14px; }
+  .field-hint {
+    font-size: 12px;
+    color: #aaa;
+    margin-bottom: 8px;
+    line-height: 1.5;
+  }
+  .field-hint em {
+    font-style: normal;
+    color: #888;
+    background: #f5f5f5;
+    padding: 1px 6px;
+    border-radius: 3px;
+    font-size: 11px;
+  }
+
+  input[type="text"], textarea, select {
+    width: 100%;
+    padding: 12px 14px;
+    border: 1.5px solid #e0e0e0;
+    border-radius: 10px;
+    font-size: 15px;
+    font-family: inherit;
+    color: #333;
+    background: #fafafa;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    -webkit-appearance: none;
+    appearance: none;
+  }
+  input[type="text"]:focus, textarea:focus, select:focus {
+    outline: none;
+    border-color: #52B788;
+    box-shadow: 0 0 0 3px rgba(82,183,136,0.12);
+    background: #fff;
+  }
+  textarea { resize: vertical; min-height: 72px; }
+  select {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23999' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 14px center;
+    padding-right: 36px;
+  }
+
+  .checkbox-group, .radio-group { display: flex; flex-direction: column; gap: 8px; }
+  .checkbox-item, .radio-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 14px;
+    border: 1.5px solid #e8e8e8;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.2s;
+    user-select: none;
+  }
+  .checkbox-item:active, .radio-item:active { transform: scale(0.98); }
+  .checkbox-item.checked, .radio-item.checked {
+    border-color: #52B788;
+    background: #f0faf4;
+  }
+  .checkbox-item input, .radio-item input { display: none; }
+  .check-mark {
+    width: 20px;
+    height: 20px;
+    border: 2px solid #ccc;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    transition: all 0.2s;
+    font-size: 12px;
+    color: transparent;
+  }
+  .radio-mark {
+    width: 20px;
+    height: 20px;
+    border: 2px solid #ccc;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    transition: all 0.2s;
+  }
+  .radio-mark::after {
+    content: '';
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: #52B788;
+    transform: scale(0);
+    transition: transform 0.2s;
+  }
+  .checkbox-item.checked .check-mark {
+    background: #52B788;
+    border-color: #52B788;
+    color: #fff;
+  }
+  .radio-item.checked .radio-mark { border-color: #52B788; }
+  .radio-item.checked .radio-mark::after { transform: scale(1); }
+  .item-text { flex: 1; }
+  .item-title { font-size: 14px; font-weight: 500; color: #333; }
+  .item-desc { font-size: 11px; color: #aaa; margin-top: 1px; }
+  .item-tag {
+    display: inline-block;
+    background: #e8f5e9;
+    color: #2E7D32;
+    font-size: 10px;
+    padding: 1px 6px;
+    border-radius: 4px;
+    margin-left: 6px;
+    font-weight: 600;
+  }
+
+  .style-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+  }
+  .style-grid .checkbox-item, .style-grid .radio-item {
+    padding: 10px 12px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+  }
+
+  .submit-area { padding: 8px 16px 32px; max-width: 520px; margin: 0 auto; }
+  .btn-copy {
+    width: 100%;
+    padding: 16px;
+    background: linear-gradient(135deg, #1B4332, #2D6A4F);
+    color: #fff;
+    border: none;
+    border-radius: 14px;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s;
+    box-shadow: 0 4px 12px rgba(27,67,50,0.3);
+    font-family: inherit;
+  }
+  .btn-copy:active { transform: scale(0.97); box-shadow: 0 2px 6px rgba(27,67,50,0.3); }
+  .btn-copy.copied {
+    background: linear-gradient(135deg, #52B788, #40916C);
+  }
+  .btn-hint {
+    text-align: center;
+    font-size: 12px;
+    color: #999;
+    margin-top: 10px;
+    line-height: 1.5;
+  }
+
+  .toast {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0.8);
+    background: rgba(0,0,0,0.78);
+    color: #fff;
+    padding: 16px 28px;
+    border-radius: 12px;
+    font-size: 15px;
+    z-index: 999;
+    opacity: 0;
+    transition: all 0.3s;
+    pointer-events: none;
+    text-align: center;
+  }
+  .toast.show { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+
+  .other-input {
+    margin-top: 8px;
+    display: none;
+  }
+  .other-input.show { display: block; }
+
+  .color-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
+  }
+  .color-swatch {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    padding: 8px 4px 6px;
+    border: 1.5px solid #e8e8e8;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.2s;
+    user-select: none;
+    background: #fff;
+  }
+  .color-swatch:active { transform: scale(0.95); }
+  .color-swatch.selected {
+    border-color: #52B788;
+    background: #f0faf4;
+    box-shadow: 0 0 0 2px rgba(82,183,136,0.15);
+  }
+  .swatch-circle {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    border: 2px solid rgba(0,0,0,0.08);
+    flex-shrink: 0;
+  }
+  .swatch-label {
+    font-size: 11px;
+    color: #555;
+    text-align: center;
+    line-height: 1.2;
+  }
+  .swatch-recommend {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-size: 14px;
+    flex-shrink: 0;
+  }
+  .selection-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+  }
+  .selection-grid .checkbox-item,
+  .selection-grid .radio-item {
+    padding: 10px 12px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+  }
+  .multi-select-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>门店装修图资料收集表</h1>
+  <p>请填写以下信息，我们将为您生成高德门店主页全套装修素材（共 32 张图）</p>
+  <span class="badge">填写约 5-10 分钟 · 带 * 为必填</span>
+</div>
+
+<div class="progress-bar">
+  <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+  <div class="progress-text" id="progressText">0 / 15</div>
+</div>
+
+<div class="container">
+
+  <!-- 一、门店基本信息 -->
+  <div class="section">
+    <div class="section-title"><span class="icon">🏪</span> 一、门店基本信息</div>
+    <div class="section-desc">帮助我们了解您的门店是谁、在哪里、做什么</div>
+
+    <div class="field">
+      <div class="field-label"><span class="required">*</span> 门店名称</div>
+      <div class="field-hint">高德地图上显示的店名</div>
+      <input type="text" id="storeName" placeholder="如：穗好家具超市" data-field="门店名称">
+    </div>
+
+    <div class="field">
+      <div class="field-label"><span class="required">*</span> 经营品类</div>
+      <div class="field-hint">选择您门店所属的行业</div>
+      <select id="category" data-field="经营品类">
+        <option value="">请选择品类</option>
+        <option value="家具">家具</option>
+        <option value="餐饮">餐饮</option>
+        <option value="酒店">酒店</option>
+        <option value="教培">教培</option>
+        <option value="家装">家装</option>
+        <option value="其他">其他（请在补充说明中写明）</option>
+      </select>
+    </div>
+
+    <div class="field">
+      <div class="field-label">门店地址</div>
+      <div class="field-hint">省+市+区+街道，不填不影响出图</div>
+      <input type="text" id="address" placeholder="如：广东省广州市天河区XX路XX号" data-field="门店地址">
+    </div>
+
+    <div class="field">
+      <div class="field-label">门店面积</div>
+      <div class="field-hint">选择最接近的面积范围</div>
+      <select id="area" data-field="门店面积">
+        <option value="">请选择</option>
+        <option value="100㎡以下">100㎡以下（小店/档口）</option>
+        <option value="100-300㎡">100-300㎡（标准店）</option>
+        <option value="300-500㎡">300-500㎡（中型店）</option>
+        <option value="500-1000㎡">500-1000㎡（大型店）</option>
+        <option value="1000㎡以上">1000㎡以上（超大展厅）</option>
+      </select>
+    </div>
+
+    <div class="field">
+      <div class="field-label">成立/开业时间</div>
+      <div class="field-hint">门店经营了多久</div>
+      <select id="founded" data-field="成立时间">
+        <option value="">请选择</option>
+        <option value="1年以内">1年以内（新店）</option>
+        <option value="1-3年">1-3年</option>
+        <option value="3-5年">3-5年</option>
+        <option value="5-10年">5-10年（老店）</option>
+        <option value="10年以上">10年以上（老字号）</option>
+      </select>
+    </div>
+
+    <div class="field">
+      <div class="field-label">目标客户（可多选）</div>
+      <div class="field-hint">选择您门店的主要客户群体</div>
+      <div class="multi-select-grid">
+        <label class="checkbox-item" onclick="toggleCheck(this, 'targetCustomer')">
+          <input type="checkbox" name="targetCustomer" value="新房装修业主">
+          <span class="check-mark">✓</span>
+          <div class="item-text"><div class="item-title">新房装修业主</div></div>
+        </label>
+        <label class="checkbox-item" onclick="toggleCheck(this, 'targetCustomer')">
+          <input type="checkbox" name="targetCustomer" value="二手房改造业主">
+          <span class="check-mark">✓</span>
+          <div class="item-text"><div class="item-title">二手房改造业主</div></div>
+        </label>
+        <label class="checkbox-item" onclick="toggleCheck(this, 'targetCustomer')">
+          <input type="checkbox" name="targetCustomer" value="年轻租房群体">
+          <span class="check-mark">✓</span>
+          <div class="item-text"><div class="item-title">年轻租房群体</div></div>
+        </label>
+        <label class="checkbox-item" onclick="toggleCheck(this, 'targetCustomer')">
+          <input type="checkbox" name="targetCustomer" value="商业客户/企业">
+          <span class="check-mark">✓</span>
+          <div class="item-text"><div class="item-title">商业客户/企业</div></div>
+        </label>
+        <label class="checkbox-item" onclick="toggleCheck(this, 'targetCustomer')">
+          <input type="checkbox" name="targetCustomer" value="周边社区居民">
+          <span class="check-mark">✓</span>
+          <div class="item-text"><div class="item-title">周边社区居民</div></div>
+        </label>
+        <label class="checkbox-item" onclick="toggleCheck(this, 'targetCustomer')">
+          <input type="checkbox" name="targetCustomer" value="中高端消费人群">
+          <span class="check-mark">✓</span>
+          <div class="item-text"><div class="item-title">中高端消费人群</div></div>
+        </label>
+      </div>
+      <label class="checkbox-item" style="margin-top:8px" onclick="toggleCheck(this, 'targetCustomer');toggleOtherInput('targetCustomerOther', this)">
+        <input type="checkbox" name="targetCustomer" value="其他">
+        <span class="check-mark">✓</span>
+        <div class="item-text">
+          <div class="item-title">其他</div>
+          <div class="item-desc">自己描述客户类型</div>
+        </div>
+      </label>
+      <input type="text" id="targetCustomerOther" placeholder="请输入其他客户类型..." data-field="目标客户(其他)" style="margin-top:8px;display:none">
+    </div>
+
+    <div class="field">
+      <div class="field-label">价格定位</div>
+      <div class="field-hint">您的产品/服务大概什么价位</div>
+      <select id="priceRange" data-field="价格定位">
+        <option value="">请选择</option>
+        <option value="高端定制">高端定制</option>
+        <option value="中端性价比">中端性价比</option>
+        <option value="平价亲民">平价亲民</option>
+      </select>
+    </div>
+  </div>
+
+  <!-- 二、品牌颜色与形象 -->
+  <div class="section">
+    <div class="section-title"><span class="icon">🎨</span> 二、品牌颜色与形象</div>
+    <div class="section-desc">决定所有图片的整体色调，不确定可以填"帮我推荐"</div>
+
+    <div class="field">
+      <div class="field-label">品牌主色</div>
+      <div class="field-hint">选择您门店/Logo 最主要的颜色（可多选）</div>
+      <div class="color-grid" id="brandColorGrid">
+        <div class="color-swatch" onclick="selectColor(this,'brandColor')" data-value="深绿">
+          <div class="swatch-circle" style="background:#1B4332"></div>
+          <div class="swatch-label">深绿</div>
+        </div>
+        <div class="color-swatch" onclick="selectColor(this,'brandColor')" data-value="深蓝">
+          <div class="swatch-circle" style="background:#1B3A5C"></div>
+          <div class="swatch-label">深蓝</div>
+        </div>
+        <div class="color-swatch" onclick="selectColor(this,'brandColor')" data-value="红色">
+          <div class="swatch-circle" style="background:#C0392B"></div>
+          <div class="swatch-label">红色</div>
+        </div>
+        <div class="color-swatch" onclick="selectColor(this,'brandColor')" data-value="金色">
+          <div class="swatch-circle" style="background:#D4A843"></div>
+          <div class="swatch-label">金色</div>
+        </div>
+        <div class="color-swatch" onclick="selectColor(this,'brandColor')" data-value="橙色">
+          <div class="swatch-circle" style="background:#E67E22"></div>
+          <div class="swatch-label">橙色</div>
+        </div>
+        <div class="color-swatch" onclick="selectColor(this,'brandColor')" data-value="紫色">
+          <div class="swatch-circle" style="background:#7D3C98"></div>
+          <div class="swatch-label">紫色</div>
+        </div>
+        <div class="color-swatch" onclick="selectColor(this,'brandColor')" data-value="黑色">
+          <div class="swatch-circle" style="background:#2C3E50"></div>
+          <div class="swatch-label">黑色</div>
+        </div>
+        <div class="color-swatch" onclick="selectColor(this,'brandColor')" data-value="帮我推荐">
+          <div class="swatch-recommend">?</div>
+          <div class="swatch-label">帮我推荐</div>
+        </div>
+      </div>
+      <div id="brandColorOtherWrap" style="display:none;margin-top:8px">
+        <input type="text" id="brandColorCustom" placeholder="请输入颜色名称，如：墨绿、湖蓝" data-field="品牌主色(自定义)">
+      </div>
+    </div>
+
+    <div class="field">
+      <div class="field-label">品牌辅助色</div>
+      <div class="field-hint">选择搭配主色的第二种颜色（可多选）</div>
+      <div class="color-grid" id="brandColor2Grid">
+        <div class="color-swatch" onclick="selectColor(this,'brandColor2')" data-value="米白">
+          <div class="swatch-circle" style="background:#F5F0E8;border-color:#ddd"></div>
+          <div class="swatch-label">米白</div>
+        </div>
+        <div class="color-swatch" onclick="selectColor(this,'brandColor2')" data-value="浅灰">
+          <div class="swatch-circle" style="background:#BDC3C7"></div>
+          <div class="swatch-label">浅灰</div>
+        </div>
+        <div class="color-swatch" onclick="selectColor(this,'brandColor2')" data-value="金色">
+          <div class="swatch-circle" style="background:#D4A843"></div>
+          <div class="swatch-label">金色</div>
+        </div>
+        <div class="color-swatch" onclick="selectColor(this,'brandColor2')" data-value="暖橙">
+          <div class="swatch-circle" style="background:#E67E22"></div>
+          <div class="swatch-label">暖橙</div>
+        </div>
+        <div class="color-swatch" onclick="selectColor(this,'brandColor2')" data-value="浅蓝">
+          <div class="swatch-circle" style="background:#85C1E9"></div>
+          <div class="swatch-label">浅蓝</div>
+        </div>
+        <div class="color-swatch" onclick="selectColor(this,'brandColor2')" data-value="木色">
+          <div class="swatch-circle" style="background:#A0785A"></div>
+          <div class="swatch-label">木色</div>
+        </div>
+        <div class="color-swatch" onclick="selectColor(this,'brandColor2')" data-value="帮我推荐">
+          <div class="swatch-recommend">?</div>
+          <div class="swatch-label">帮我推荐</div>
+        </div>
+      </div>
+      <div id="brandColor2OtherWrap" style="display:none;margin-top:8px">
+        <input type="text" id="brandColor2Custom" placeholder="请输入颜色名称，如：驼色、莫兰迪绿" data-field="品牌辅助色(自定义)">
+      </div>
+    </div>
+
+    <div class="field">
+      <div class="field-label">Logo 描述</div>
+      <div class="field-hint">简单描述 Logo 样子，或直接发图片</div>
+      <input type="text" id="logoDesc" placeholder="如：绿色叶子+店名、圆形图标里有房子图案" data-field="Logo描述">
+    </div>
+
+    <div class="field">
+      <div class="field-label">品牌口号 / Slogan</div>
+      <div class="field-hint">您的宣传语（如有）</div>
+      <input type="text" id="slogan" placeholder="如：品质生活，从家开始" data-field="品牌口号">
+    </div>
+  </div>
+
+  <!-- 三、产品与服务 -->
+  <div class="section">
+    <div class="section-title"><span class="icon"></span> 三、产品与服务</div>
+    <div class="section-desc">用于生成团购产品图和特色服务图标，请尽量列全</div>
+
+    <div class="field">
+      <div class="field-label"><span class="required">*</span> 主营产品</div>
+      <div class="field-hint">列出 6-8 个主要产品，用顿号隔开</div>
+      <textarea id="products" placeholder="如：真皮沙发、布艺沙发、实木床、床垫、床头柜、衣柜、餐桌椅、书桌" data-field="主营产品"></textarea>
+    </div>
+
+    <div class="field">
+      <div class="field-label">团购产品名</div>
+      <div class="field-hint">打算在高德上挂团购的产品（如有）</div>
+      <textarea id="groupBuy" placeholder="如：真皮沙发套餐 ¥2999、北欧布艺沙发 ¥1999" data-field="团购产品" style="min-height:56px"></textarea>
+    </div>
+
+    <div class="field">
+      <div class="field-label">特色服务</div>
+      <div class="field-hint">列出 4-8 个特色服务，用顿号隔开</div>
+      <textarea id="services" placeholder="如：全屋定制、免费上门测量、免费设计、送货安装、十年质保、以旧换新" data-field="特色服务"></textarea>
+    </div>
+
+    <div class="field">
+      <div class="field-label">门店优势 / 卖点</div>
+      <div class="field-hint">用一两句话说明您店最大的卖点</div>
+      <textarea id="advantages" placeholder="如：本地最大家具卖场，20年品牌，工厂直供价格透明" data-field="门店优势" style="min-height:56px"></textarea>
+    </div>
+  </div>
+
+  <!-- 四、图片风格偏好 -->
+  <div class="section">
+    <div class="section-title"><span class="icon">️</span> 四、图片风格偏好</div>
+    <div class="section-desc">不确定就选"帮我推荐"，我们会自动匹配最合适的风格</div>
+
+    <div class="field">
+      <div class="field-label">案例图风格（选 2 种，尽量差异大）</div>
+      <div class="style-grid">
+        <label class="checkbox-item" onclick="toggleCheck(this, 'style')">
+          <input type="checkbox" name="style" value="现代简约">
+          <span class="check-mark">✓</span>
+          <div class="item-text">
+            <div class="item-title">现代简约</div>
+            <div class="item-desc">干净利落，像宜家</div>
+          </div>
+        </label>
+        <label class="checkbox-item" onclick="toggleCheck(this, 'style')">
+          <input type="checkbox" name="style" value="中古风">
+          <span class="check-mark">✓</span>
+          <div class="item-text">
+            <div class="item-title">中古风</div>
+            <div class="item-desc">复古优雅，暖木色调</div>
+          </div>
+        </label>
+        <label class="checkbox-item" onclick="toggleCheck(this, 'style')">
+          <input type="checkbox" name="style" value="北欧风">
+          <span class="check-mark">✓</span>
+          <div class="item-text">
+            <div class="item-title">北欧风</div>
+            <div class="item-desc">清新自然，温馨舒适</div>
+          </div>
+        </label>
+        <label class="checkbox-item" onclick="toggleCheck(this, 'style')">
+          <input type="checkbox" name="style" value="新中式">
+          <span class="check-mark">✓</span>
+          <div class="item-text">
+            <div class="item-title">新中式</div>
+            <div class="item-desc">东方韵味，传统与现代融合</div>
+          </div>
+        </label>
+        <label class="checkbox-item" onclick="toggleCheck(this, 'style')">
+          <input type="checkbox" name="style" value="轻奢风">
+          <span class="check-mark">✓</span>
+          <div class="item-text">
+            <div class="item-title">轻奢风</div>
+            <div class="item-desc">大理石+金属，精致高级</div>
+          </div>
+        </label>
+        <label class="checkbox-item" onclick="toggleCheck(this, 'style')">
+          <input type="checkbox" name="style" value="日式侘寂">
+          <span class="check-mark">✓</span>
+          <div class="item-text">
+            <div class="item-title">日式侘寂</div>
+            <div class="item-desc">质朴自然，安静禅意</div>
+          </div>
+        </label>
+        <label class="checkbox-item" onclick="toggleCheck(this, 'style')">
+          <input type="checkbox" name="style" value="美式田园">
+          <span class="check-mark">✓</span>
+          <div class="item-text">
+            <div class="item-title">美式田园</div>
+            <div class="item-desc">温馨乡村，舒适宽大</div>
+          </div>
+        </label>
+        <label class="checkbox-item" onclick="toggleCheck(this, 'style')">
+          <input type="checkbox" name="style" value="工业风">
+          <span class="check-mark">✓</span>
+          <div class="item-text">
+            <div class="item-title">工业风</div>
+            <div class="item-desc">裸露砖墙，酷感个性</div>
+          </div>
+        </label>
+      </div>
+      <div class="other-input" id="styleOtherWrap">
+        <input type="text" id="styleOther" placeholder="请描述您想要的风格" data-field="案例风格(其他)">
+      </div>
+      <label class="checkbox-item" style="margin-top:8px" onclick="toggleCheck(this, 'style');toggleOther('styleOtherWrap')">
+        <input type="checkbox" name="style" value="其他">
+        <span class="check-mark">✓</span>
+        <div class="item-text">
+          <div class="item-title">其他风格</div>
+          <div class="item-desc">自己描述想要的风格</div>
+        </div>
+      </label>
+      <label class="checkbox-item" style="margin-top:8px" onclick="toggleCheck(this, 'style')">
+        <input type="checkbox" name="style" value="帮我推荐">
+        <span class="check-mark">✓</span>
+        <div class="item-text">
+          <div class="item-title">帮我推荐 <span class="item-tag">推荐</span></div>
+          <div class="item-desc">根据品类自动匹配最合适的两种</div>
+        </div>
+      </label>
+    </div>
+
+    <div class="field" style="margin-top:20px">
+      <div class="field-label">图标风格（选 1 种）</div>
+      <div class="radio-group">
+        <label class="radio-item checked" onclick="selectRadio(this, 'iconStyle')">
+          <input type="radio" name="iconStyle" value="微立体" checked>
+          <span class="radio-mark"></span>
+          <div class="item-text">
+            <div class="item-title">微立体 <span class="item-tag">推荐</span></div>
+            <div class="item-desc">轻微立体感+柔和阴影，适合大多数门店</div>
+          </div>
+        </label>
+        <label class="radio-item" onclick="selectRadio(this, 'iconStyle')">
+          <input type="radio" name="iconStyle" value="扁平极简">
+          <span class="radio-mark"></span>
+          <div class="item-text">
+            <div class="item-title">扁平极简</div>
+            <div class="item-desc">纯色块+简洁轮廓，科技感强</div>
+          </div>
+        </label>
+        <label class="radio-item" onclick="selectRadio(this, 'iconStyle')">
+          <input type="radio" name="iconStyle" value="线性描边">
+          <span class="radio-mark"></span>
+          <div class="item-text">
+            <div class="item-title">线性描边</div>
+            <div class="item-desc">细线条勾勒+品牌色点缀，文艺清新</div>
+          </div>
+        </label>
+      </div>
+    </div>
+
+    <div class="field" style="margin-top:20px">
+      <div class="field-label">整体调性（选 1 种）</div>
+      <div class="radio-group">
+        <label class="radio-item" onclick="selectRadio(this, 'tone')">
+          <input type="radio" name="tone" value="高端大气">
+          <span class="radio-mark"></span>
+          <div class="item-text">
+            <div class="item-title">高端大气</div>
+            <div class="item-desc">像奢侈品门店，精致有距离感</div>
+          </div>
+        </label>
+        <label class="radio-item" onclick="selectRadio(this, 'tone')">
+          <input type="radio" name="tone" value="亲民实惠">
+          <span class="radio-mark"></span>
+          <div class="item-text">
+            <div class="item-title">亲民实惠</div>
+            <div class="item-desc">像社区店，温暖接地气</div>
+          </div>
+        </label>
+        <label class="radio-item" onclick="selectRadio(this, 'tone')">
+          <input type="radio" name="tone" value="年轻时尚">
+          <span class="radio-mark"></span>
+          <div class="item-text">
+            <div class="item-title">年轻时尚</div>
+            <div class="item-desc">像网红店，活泼有活力</div>
+          </div>
+        </label>
+        <label class="radio-item" onclick="selectRadio(this, 'tone')">
+          <input type="radio" name="tone" value="传统稳重">
+          <span class="radio-mark"></span>
+          <div class="item-text">
+            <div class="item-title">传统稳重</div>
+            <div class="item-desc">像老字号，可靠有底蕴</div>
+          </div>
+        </label>
+      </div>
+    </div>
+  </div>
+
+  <!-- 五、参考素材 -->
+  <div class="section">
+    <div class="section-title"><span class="icon">📸</span> 五、参考素材（可选）</div>
+    <div class="section-desc">有图胜千言！有的话请一并提供，手机拍的就行</div>
+
+    <div class="field">
+      <div class="checkbox-group">
+        <label class="checkbox-item" onclick="toggleCheck(this, 'reference')">
+          <input type="checkbox" name="reference" value="门店实拍照片">
+          <span class="check-mark">✓</span>
+          <div class="item-text">
+            <div class="item-title">门店实拍照片</div>
+            <div class="item-desc">外观门头 / 内部环境</div>
+          </div>
+        </label>
+        <label class="checkbox-item" onclick="toggleCheck(this, 'reference')">
+          <input type="checkbox" name="reference" value="Logo源文件">
+          <span class="check-mark">✓</span>
+          <div class="item-text">
+            <div class="item-title">Logo 源文件</div>
+            <div class="item-desc">PNG / JPG 都可以</div>
+          </div>
+        </label>
+        <label class="checkbox-item" onclick="toggleCheck(this, 'reference')">
+          <input type="checkbox" name="reference" value="竞品参考图">
+          <span class="check-mark">✓</span>
+          <div class="item-text">
+            <div class="item-title">竞品参考图</div>
+            <div class="item-desc">觉得做得好的同行门店截图</div>
+          </div>
+        </label>
+        <label class="checkbox-item" onclick="toggleCheck(this, 'reference')">
+          <input type="checkbox" name="reference" value="风格参考图">
+          <span class="check-mark">✓</span>
+          <div class="item-text">
+            <div class="item-title">风格参考图</div>
+            <div class="item-desc">网上看到的喜欢的装修风格图片</div>
+          </div>
+        </label>
+      </div>
+    </div>
+  </div>
+
+  <!-- 六、补充说明 -->
+  <div class="section">
+    <div class="section-title"><span class="icon">💬</span> 六、补充说明</div>
+    <div class="section-desc">任何特殊要求或上面没覆盖到的信息</div>
+
+    <div class="field">
+      <div class="field-hint" style="margin-bottom:10px">
+        例如：<br>
+        · "我们店刚装修过，希望图片风格跟实际一致"<br>
+        · "不要出现人物"<br>
+        · "我们主要做儿童家具，希望风格活泼一些"
+      </div>
+      <textarea id="notes" placeholder="请在此填写您的补充说明..." data-field="补充说明" style="min-height:80px"></textarea>
+    </div>
+  </div>
+
+</div>
+
+<div class="submit-area">
+  <button class="btn-copy" id="btnCopy" onclick="copyContent()">📋 一键复制填写内容</button>
+  <div class="btn-hint">点击后自动复制，粘贴发给对接人即可<br>对接人收到后会为您生成全套装修图</div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const totalFields = 17;
+const fieldIds = ['storeName','category','address','area','founded','priceRange','brandColorCustom','brandColor2Custom','logoDesc','slogan','products','groupBuy','services','advantages'];
+
+function updateProgress() {
+  let filled = 0;
+  // Standard text/select fields
+  fieldIds.forEach(id => {
+    const el = document.getElementById(id);
+    if (el && el.value.trim()) filled++;
+  });
+  // Color swatches (count each group with any selection as 1)
+  if (document.querySelectorAll('#brandColorGrid .color-swatch.selected').length > 0) filled++;
+  if (document.querySelectorAll('#brandColor2Grid .color-swatch.selected').length > 0) filled++;
+  // Target customer multi-select
+  if (document.querySelectorAll('input[name="targetCustomer"]:checked').length > 0) filled++;
+  // Style selections
+  if (document.querySelectorAll('input[name="style"]:checked').length > 0) filled++;
+  // Icon style
+  if (document.querySelector('input[name="iconStyle"]:checked')) filled++;
+  // Tone
+  if (document.querySelector('input[name="tone"]:checked')) filled++;
+
+  const pct = Math.min(Math.round((filled / totalFields) * 100), 100);
+  document.getElementById('progressFill').style.width = pct + '%';
+  document.getElementById('progressText').textContent = filled + ' / ' + totalFields;
+}
+
+document.querySelectorAll('input[type="text"], textarea, select').forEach(el => {
+  el.addEventListener('input', updateProgress);
+  el.addEventListener('change', updateProgress);
+});
+// Also listen on custom color/target inputs
+['brandColorCustom','brandColor2Custom','targetCustomerOther'].forEach(id => {
+  const el = document.getElementById(id);
+  if (el) {
+    el.addEventListener('input', updateProgress);
+    el.addEventListener('change', updateProgress);
+  }
+});
+
+function toggleCheck(el, name) {
+  setTimeout(() => {
+    const cb = el.querySelector('input[type="checkbox"]');
+    if (cb.checked) el.classList.add('checked');
+    else el.classList.remove('checked');
+    updateProgress();
+  }, 10);
+}
+
+function selectRadio(el, name) {
+  document.querySelectorAll('input[name="' + name + '"]').forEach(r => {
+    r.closest('.radio-item').classList.remove('checked');
+  });
+  el.classList.add('checked');
+  el.querySelector('input').checked = true;
+  updateProgress();
+}
+
+function toggleOther(id) {
+  const wrap = document.getElementById(id);
+  setTimeout(() => {
+    const cb = wrap.previousElementSibling.querySelector('input[type="checkbox"]');
+    if (cb && cb.checked) wrap.classList.add('show');
+    else wrap.classList.remove('show');
+  }, 10);
+}
+
+function selectColor(swatch, groupName) {
+  swatch.classList.toggle('selected');
+  const val = swatch.getAttribute('data-value');
+  const otherWrapId = groupName === 'brandColor' ? 'brandColorOtherWrap' : 'brandColor2OtherWrap';
+  const otherWrap = document.getElementById(otherWrapId);
+  if (val === '其他') {
+    otherWrap.style.display = swatch.classList.contains('selected') ? 'block' : 'none';
+  }
+  updateProgress();
+}
+
+function toggleOtherInput(inputId, checkboxEl) {
+  const otherInput = document.getElementById(inputId);
+  if (otherInput) otherInput.style.display = checkboxEl.checked ? 'block' : 'none';
+  updateProgress();
+}
+
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2000);
+}
+
+function copyContent() {
+  const v = id => (document.getElementById(id)?.value || '').trim();
+  const getChecked = name => {
+    const items = [];
+    document.querySelectorAll('input[name="' + name + '"]:checked').forEach(cb => items.push(cb.value));
+    return items.join('、');
+  };
+  const getColorSelected = gridId => {
+    const items = [];
+    document.querySelectorAll('#' + gridId + ' .color-swatch.selected').forEach(s => items.push(s.getAttribute('data-value')));
+    return items.join('、');
+  };
+
+  let text = '门店装修图资料收集表\n';
+  text += '━━━━━━━━━━━━━━━━━━━━━━\n\n';
+
+  text += '【一、门店基本信息】\n';
+  text += '门店名称：' + (v('storeName') || '未填写') + '\n';
+  text += '经营品类：' + (v('category') || '未填写') + '\n';
+  text += '门店地址：' + (v('address') || '未填写') + '\n';
+  text += '门店面积：' + (v('area') || '未填写') + '\n';
+  text += '成立时间：' + (v('founded') || '未填写') + '\n';
+  const targetC = getChecked('targetCustomer');
+  const targetCOther = v('targetCustomerOther');
+  text += '目标客户：' + ((targetC ? targetC : '') + (targetCOther ? (targetC ? '、' : '') + targetCOther : '') || '未填写') + '\n';
+  text += '价格定位：' + (v('priceRange') || '未填写') + '\n\n';
+
+  text += '【二、品牌颜色与形象】\n';
+  const bc1 = getColorSelected('brandColorGrid');
+  const bc1Custom = v('brandColorCustom');
+  text += '品牌主色：' + ((bc1 ? bc1 : '') + (bc1Custom ? (bc1 ? '、' : '') + bc1Custom : '') || '未填写') + '\n';
+  const bc2 = getColorSelected('brandColor2Grid');
+  const bc2Custom = v('brandColor2Custom');
+  text += '品牌辅助色：' + ((bc2 ? bc2 : '') + (bc2Custom ? (bc2 ? '、' : '') + bc2Custom : '') || '未填写') + '\n';
+  text += 'Logo描述：' + (v('logoDesc') || '未填写') + '\n';
+  text += '品牌口号：' + (v('slogan') || '未填写') + '\n\n';
+
+  text += '【三、产品与服务】\n';
+  text += '主营产品：' + (v('products') || '未填写') + '\n';
+  text += '团购产品：' + (v('groupBuy') || '未填写') + '\n';
+  text += '特色服务：' + (v('services') || '未填写') + '\n';
+  text += '门店优势：' + (v('advantages') || '未填写') + '\n\n';
+
+  text += '【四、图片风格偏好】\n';
+  const styles = getChecked('style');
+  text += '案例图风格：' + (styles || '未选择') + '\n';
+  if (v('styleOther')) text += '其他风格描述：' + v('styleOther') + '\n';
+  const iconStyle = document.querySelector('input[name="iconStyle"]:checked');
+  text += '图标风格：' + (iconStyle ? iconStyle.value : '未选择') + '\n';
+  const tone = document.querySelector('input[name="tone"]:checked');
+  text += '整体调性：' + (tone ? tone.value : '未选择') + '\n\n';
+
+  text += '【五、参考素材】\n';
+  const refs = getChecked('reference');
+  text += '提供素材：' + (refs || '无') + '\n\n';
+
+  text += '【六、补充说明】\n';
+  text += (v('notes') || '无') + '\n';
+
+  // Copy to clipboard
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(text).then(() => {
+      const btn = document.getElementById('btnCopy');
+      btn.textContent = '✅ 已复制！粘贴发给对接人即可';
+      btn.classList.add('copied');
+      showToast('复制成功');
+      setTimeout(() => {
+        btn.textContent = '📋 一键复制填写内容';
+        btn.classList.remove('copied');
+      }, 3000);
+    }).catch(() => {
+      fallbackCopy(text);
+    });
+  } else {
+    fallbackCopy(text);
+  }
+}
+
+function fallbackCopy(text) {
+  const ta = document.createElement('textarea');
+  ta.value = text;
+  ta.style.position = 'fixed';
+  ta.style.left = '-9999px';
+  document.body.appendChild(ta);
+  ta.select();
+  try {
+    document.execCommand('copy');
+    const btn = document.getElementById('btnCopy');
+    btn.textContent = '✅ 已复制！粘贴发给对接人即可';
+    btn.classList.add('copied');
+    showToast('复制成功');
+    setTimeout(() => {
+      btn.textContent = '📋 一键复制填写内容';
+      btn.classList.remove('copied');
+    }, 3000);
+  } catch(e) {
+    showToast('复制失败，请手动全选复制');
+  }
+  document.body.removeChild(ta);
+}
+
+// Init progress
+updateProgress();
+</script>
+</body>
+</html>
